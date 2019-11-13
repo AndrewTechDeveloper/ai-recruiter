@@ -1,1 +1,16 @@
-@import "~react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+@import '~mdbreact/dist/css/mdb.css';
+
+@import "~@coreui/coreui/scss/coreui.scss";
+@import '~@coreui/coreui/scss/_dropdown-menu-right.scss';
+// Temp fix for reactstrap
+@import '~@coreui/icons/css/coreui-icons.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+// Import Flag Icons Set
+@import '~flag-icon-css/css/flag-icon.min.css';
+// Import Font Awesome Icons Set
+@import '~font-awesome/css/font-awesome.min.css';
+// Import Simple Line Icons Set
+@import '~simple-line-icons/css/simple-line-icons.css';
+
+@import '~react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+@import '~react-toastify/dist/ReactToastify.css';
