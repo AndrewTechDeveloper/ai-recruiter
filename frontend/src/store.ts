@@ -5,12 +5,18 @@ import {
 } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import ApplicantModule from './modules/Applicant';
+import JobModule from './modules/Job';
+import { JobState, DispatchProps, JobDispatchProps } from './types/job.ts';
+
+export interface AppState {
+  job: JobState;
+  jobDispatch: JobDispatchProps;
+}
 
 export default function createStore() {
   const store = reduxCreateStore(
     combineReducers({
-      applicant: ApplicantModule,
+      job: JobModule,
     }),
     applyMiddleware(logger, thunk),
   );

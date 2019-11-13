@@ -12,19 +12,6 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        test: /\.ts$|\.tsx$/,
-        exclude: [
-          /node_modules/
-        ],
-        options: {
-          emitErrors: true,
-          typeCheck: true,
-          fix: true
-        }
-      },
-      {
         loader: 'ts-loader',
         test: /\.ts$|\.tsx$/,
         exclude: [

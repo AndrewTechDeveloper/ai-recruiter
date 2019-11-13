@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noImplicitAny": true,
-    "module": "es2015",
+    "module": "esnext",
     "jsx": "react"
   },
   "include": [
