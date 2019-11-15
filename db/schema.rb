@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_034340) do
+ActiveRecord::Schema.define(version: 2019_11_13_060814) do
+
+  create_table "applicant_occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "applicant_id", null: false
+    t.integer "occupation_id", null: false
+    t.integer "work_length", default: 0, null: false
+    t.integer "salary", default: 0, null: false
+    t.integer "position", default: 0, null: false
+    t.integer "quit_reason", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["applicant_id"], name: "index_applicant_occupations_on_applicant_id"
+    t.index ["occupation_id"], name: "index_applicant_occupations_on_occupation_id"
+  end
 
   create_table "applicants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "age", default: 0, null: false
@@ -54,6 +67,13 @@ ActiveRecord::Schema.define(version: 2019_11_13_034340) do
     t.float "mentorship"
     t.float "compliance"
     t.float "fairness"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "about"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -5,6 +5,7 @@ import { FormStepper } from './items/Stepper.js';
 class Job extends Component {
   componentDidMount(){
     this.props.applicantDispatch.getColleges(this.props)
+    this.props.applicantDispatch.getOccupations()
   }
   render() {
     return (
