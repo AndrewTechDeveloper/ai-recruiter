@@ -10,25 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_060814) do
+ActiveRecord::Schema.define(version: 2019_12_11_051654) do
 
-  create_table "applicant_occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "applicant_companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "applicant_id", null: false
-    t.integer "occupation_id", null: false
-    t.integer "work_length", default: 0, null: false
-    t.integer "salary", default: 0, null: false
-    t.integer "position", default: 0, null: false
-    t.integer "quit_reason", default: 0, null: false
+    t.integer "company_id", null: false
+    t.integer "company_rank", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["applicant_id"], name: "index_applicant_occupations_on_applicant_id"
-    t.index ["occupation_id"], name: "index_applicant_occupations_on_occupation_id"
+  end
+
+  create_table "applicant_industries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "applicant_id", null: false
+    t.integer "industry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "applicant_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "applicant_id", null: false
+    t.integer "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "applicants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "age", default: 0, null: false
-    t.integer "job_id", null: false
+    t.integer "job_id", default: 0, null: false
     t.integer "school_id", default: 0, null: false
+    t.integer "gender", default: 0, null: false
+    t.integer "ex_jobs", default: 0, null: false
+    t.integer "job_types", default: 0, null: false
+    t.integer "industries", default: 0, null: false
+    t.integer "working_hours", default: 0, null: false
+    t.integer "consume_day_off", default: 0, null: false
+    t.integer "satisfaction", default: 0, null: false
+    t.integer "motivation", default: 0, null: false
+    t.integer "transparency", default: 0, null: false
+    t.integer "respectable", default: 0, null: false
+    t.integer "growable", default: 0, null: false
+    t.integer "mentorship", default: 0, null: false
+    t.integer "compliance", default: 0, null: false
+    t.integer "fairness", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -41,21 +64,12 @@ ActiveRecord::Schema.define(version: 2019_11_13_060814) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "job_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "job_id", null: false
-    t.string "name"
-    t.integer "type"
-    t.integer "numbers"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "industry_id"
     t.string "name"
     t.string "link"
     t.string "logo"
     t.float "total_rate"
-    t.integer "category"
     t.integer "review_nums"
     t.float "working_hours"
     t.float "consume_day_off"
@@ -71,9 +85,22 @@ ActiveRecord::Schema.define(version: 2019_11_13_060814) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "company_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "company_id", null: false
+    t.integer "job_id", null: false
+    t.integer "number", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "industries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.text "about"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

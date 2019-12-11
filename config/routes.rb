@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     resources :job_types, only: [:index]
     resources :colleges, only: [:index]
     resources :occupations, only: [:index]
+    resources :applicants, only: [:create]
   end
 end

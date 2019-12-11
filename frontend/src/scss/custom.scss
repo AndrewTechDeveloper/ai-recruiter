@@ -26,6 +26,6 @@ a:hover {
   }
 }
 
-img {
-  object-fit: cover;
+.MuiAvatar-img {
+  object-fit: contain !important;
 }

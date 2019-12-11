@@ -16,6 +16,8 @@ const mapDispatchToProps = dispatch => {
   return {
     stepForward: e => dispatch(JobModule.stepForward(e)),
     stepBackward: e => dispatch(JobModule.stepBackward(e)),
+    checkCompany: (e, i) => dispatch(JobModule.checkCompany(e, i)),
+    submitData: props => dispatch(JobModule.submitData(props)),
     applicantDispatch: {
       getColleges: () => dispatch(ApplicantModule.getColleges()),
       getOccupations: () => dispatch(ApplicantModule.getOccupations()),
@@ -26,8 +28,8 @@ const mapDispatchToProps = dispatch => {
       exJobsStatus: val => dispatch(ApplicantModule.exJobsStatus(val)),
     },
     companyDispatch: {
-      jobTypesStatus: val => dispatch(CompanyModule.jobTypesStatus(val)),
-      industriesStatus: val => dispatch(CompanyModule.industriesStatus(val)),
+      jobTypesStatus: e => dispatch(CompanyModule.jobTypesStatus(e)),
+      industriesStatus: e => dispatch(CompanyModule.industriesStatus(e)),
       workingHoursStatus: val => dispatch(CompanyModule.workingHoursStatus(val)),
       consumeDayOffStatus: val => dispatch(CompanyModule.consumeDayOffStatus(val)),
       satisfactionStatus: val => dispatch(CompanyModule.satisfactionStatus(val)),

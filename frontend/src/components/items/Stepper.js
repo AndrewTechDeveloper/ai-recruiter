@@ -7,6 +7,7 @@ import { Card, CardBody, CardGroup, Col, Container, Form, InputGroup, Row } from
 import { ApplicantView } from '../views/Applicant.js'
 import { CompanyView } from '../views/Company.js'
 import { ResultView } from '../views/Result.js'
+import { OpenWorksView } from '../views/OpenWorks.js'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const getSteps = () => {
-  return ['ユーザー情報の入力', '会社フィルタリング', '結果'];
+  return ['ユーザー情報の入力', '会社フィルタリング', '結果', '企業情報を見る'];
 }
 
 export const FormStepper = props => {
@@ -39,6 +40,9 @@ export const FormStepper = props => {
       }
       {props.job.active_step === 2 &&
         <ResultView {...props} />
+      }
+      {props.job.active_step === 3 &&
+        <OpenWorksView {...props} />
       }
     </div>
   );

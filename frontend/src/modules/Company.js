@@ -38,6 +38,8 @@ export default function reducer(state=initialState, action) {
   switch (action.type) {
   case CONNECTION_FAILURE:
     return Object.assign({}, state, { isLoading: false })
+  case LOADING:
+    return Object.assign({}, state, { isLoading: true })
   case JOB_TYPES:
     return Object.assign({}, state, { job_types: action.job_types })
   case INDUSTRIES:
@@ -70,16 +72,16 @@ export default function reducer(state=initialState, action) {
 }
 
 // action-creator
-export const jobTypesStatus = val => {
+export const jobTypesStatus = e => {
   return {
     type: JOB_TYPES,
-    job_types: val
+    job_types: e.target.value
   }
 }
-export const industriesStatus = val => {
+export const industriesStatus = e => {
   return {
     type: INDUSTRIES,
-    industries: val
+    industries: e.target.value
   }
 }
 export const workingHoursStatus = val => {

@@ -21,8 +21,8 @@ const initialState = {
   isLoading: false,
   school: '',
   faculty: '',
-  age: '',
-  gender: 0,
+  age: null,
+  gender: null,
   skill: '',
   ex_jobs: [],
   hobby: '',
@@ -61,7 +61,6 @@ export default function reducer(state=initialState, action) {
   }
 }
 
-// action-creator
 const loading = () => {
   return {
     type: LOADING,

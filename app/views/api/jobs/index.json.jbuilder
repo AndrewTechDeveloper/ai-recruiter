@@ -5,6 +5,7 @@ json.jobs do
     json.logo(job.logo)
     json.link(job.link)
     json.total_rate(job.total_rate)
+    json.category(job.category)
     json.review_nums(job.review_nums)
     json.working_hours(job.working_hours)
     json.consume_day_off(job.consume_day_off)

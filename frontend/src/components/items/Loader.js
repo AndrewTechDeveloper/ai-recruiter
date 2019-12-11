@@ -1,7 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader-spinner'
 
-const cradleLoaderStyle = {
+const loaderStyle = {
   textAlign: 'center',
   position: 'absolute',
   top: '0',
@@ -14,6 +14,4 @@ const cradleLoaderStyle = {
   zIndex: '2'
 };
 
-export const CradleLoader = <Loader type="CradleLoader" color="#00BFFF" height="100" width="100" style={cradleLoaderStyle}/>
-
-
+export const CradleLoader = <Loader type="CradleLoader" color="#00BFFF" height="100" width="100" style={loaderStyle}/>

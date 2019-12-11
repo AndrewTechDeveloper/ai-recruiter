@@ -4,15 +4,22 @@ import { Container } from 'reactstrap'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { JobTypesAutoSelect, IndustriesAutoSelect } from '../items/company/AutoSelect.js'
+import Fab from '@material-ui/core/Fab';
+import Fade from '@material-ui/core/Fade';
+import { JobTypesSelect, IndustriesSelect } from '../items/company/Select.js'
 import { FilteringSlider } from '../items/company/Slider.js'
-import AdbIcon from '@material-ui/icons/Adb';
 
 const useStyles = makeStyles(theme => ({
   container: {
     marginTop: '8px',
     marginBottom: '8px'
   },
+  fab: {
+    position: 'fixed',
+    bottom: '0',
+    right: '0',
+    margin: '40px'
+  }
 }))
 
 export const calculatePie = props => {
@@ -24,8 +31,16 @@ export const calculatePie = props => {
 
 export const CompanyView = props => {
   const classes = useStyles()
+  const validation = company => {
+    return calculatePie(props) !== 0 || company.job_types.length < 3 || company.industries.length < 3
+  }
   return (
     <Container className={classes.container}>
+      <Fade in={calculatePie(props) !== 0}>
+        <Fab color="primary" className={classes.fab}>
+          {`残り: ${calculatePie(props)}`}
+        </Fab>
+      </Fade>
       <Typography variant="h4" className="text-muted text-center" gutterBottom>
         {calculatePie(props) !== 0 ? calculatePie(props) : "DONE!"}
       </Typography>
@@ -43,17 +58,14 @@ export const CompanyView = props => {
       <FilteringSlider {...props} type="compliance"/>
       <FilteringSlider {...props} type="fairness"/>
       <Divider/>
-      <JobTypesAutoSelect {...props} />
-      <IndustriesAutoSelect {...props} />
-      <div>
-        <Button
-          disabled={props.job.active_step === 0}
-          onClick={()=>props.stepForward()}
-        >
-          Back
+      <JobTypesSelect {...props} className='mt-4'/>
+      <IndustriesSelect {...props} className='mt-4'/>
+      <div className='mt-4'>
+        <Button onClick={()=>props.stepBackward()} className='mr-4'>
+          戻る
         </Button>
-        <Button variant="contained" color="primary" startIcon={<AdbIcon />} onClick={()=>props.stepBackward() && props.companyDispatch.postData(props)}>
-          Analyze
+        <Button variant="contained" color="primary" disabled={false} onClick={()=>props.stepForward() && props.companyDispatch.postData(props)}>
+          結果を見る
         </Button>
       </div>
     </Container>

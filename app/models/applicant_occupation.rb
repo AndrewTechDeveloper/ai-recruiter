@@ -1,2 +1,0 @@
-class ApplicantOccupation < ApplicationRecord
-end

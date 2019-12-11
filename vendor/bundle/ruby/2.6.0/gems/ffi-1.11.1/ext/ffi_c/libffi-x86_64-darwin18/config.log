@@ -30,14 +30,15 @@ Kernel configured for up to 4 processors.
 Processor type: x86_64h (Intel x86-64h Haswell)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 582 tasks, 3130 threads, 4 processors
-Load average: 4.96, Mach factor: 0.45
+Default processor set: 590 tasks, 3292 threads, 4 processors
+Load average: 7.62, Mach factor: 0.43
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
 PATH: /Users/andouryou/.rbenv/versions/2.6.3/bin
 PATH: /usr/local/Cellar/rbenv/1.1.2/libexec
+PATH: /usr/local/opt/openssl@1.1/bin
 PATH: /usr/local/Cellar/pyenv-virtualenv/1.1.3/shims
 PATH: /Users/andouryou/.pyenv/shims
 PATH: /Users/andouryou/.nodebrew/current/bin
@@ -50,6 +51,12 @@ PATH: /usr/bin
 PATH: /bin
 PATH: /usr/sbin
 PATH: /sbin
+PATH: /usr/local/opt/openssl@1.1/bin
+PATH: /usr/local/Cellar/pyenv-virtualenv/1.1.3/shims
+PATH: /Users/andouryou/.pyenv/shims
+PATH: /Users/andouryou/.nodebrew/current/bin
+PATH: /Users/andouryou/.rbenv/shims
+PATH: /Users/andouryou/.rbenv/bin
 
 
 ## ----------- ##

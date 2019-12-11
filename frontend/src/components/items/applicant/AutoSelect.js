@@ -29,7 +29,7 @@ export const SchoolAutoSelect = props => {
         props.applicantDispatch.schoolChange(val ? val.name : '')
       }}
       renderInput={params => (
-        <TextField {...params} label="最終学歴" margin="normal" fullWidth />
+        <TextField {...params} label="最終学歴(入力すると補完されます)" margin="normal" fullWidth />
       )}
     />
   );
@@ -60,7 +60,7 @@ export const ExJobsAutoSelect = props => {
         props.applicantDispatch.exJobsStatus(val)
       }}
       renderInput={params => (
-        <TextField {...params} label="職種" margin="normal" fullWidth />
+        <TextField {...params} label="今までの職歴(入力すると補完されます)" margin="normal" fullWidth />
       )}
     />
   );
