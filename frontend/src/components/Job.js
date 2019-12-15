@@ -1,23 +1,24 @@
 import React, { Component } from 'react'
-import { Card, CardBody, CardGroup, Col, Container, Form, InputGroup, Row } from 'reactstrap';
+import { Card, CardGroup, Col, Container, Form, Row } from 'reactstrap';
 import { FormStepper } from './items/Stepper.js';
 
 class Job extends Component {
   componentDidMount(){
-    this.props.applicantDispatch.getColleges(this.props)
-    this.props.applicantDispatch.getOccupations()
+    this.props.jobDispatch.getColleges(this.props)
+    this.props.jobDispatch.getJobs(this.props)
+    this.props.jobDispatch.getIndustries(this.props)
   }
   render() {
     return (
       <div className="app center">
-        <main className="main" style={{ marginTop:'20px' }}>
+        <main className="main my-4">
           <Container>
             <Row className="justify-content-center">
               <Col md="8">
                 <CardGroup>
                   <Card className="p-4">
-                    <h2>就活AI</h2>
-                    <p className="text-muted">Welcome to Job Hunting AI!</p>
+                    <h2>ようこそAI-Recruiterへ</h2>
+                    <p className="text-muted">あなたの情報をもとにおすすめの企業を抽出します</p>
                       <Form>
                         <FormStepper { ...this.props }/>
                       </Form>
@@ -27,6 +28,7 @@ class Job extends Component {
             </Row>
           </Container>
         </main>
+        <p className="text-muted" style={{ textAlign: 'center' }}>OpenWorksのデータを参照しています https://www.vorkers.com/</p>
       </div>
     );
   }

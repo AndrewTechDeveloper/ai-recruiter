@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Fab from '@material-ui/core/Fab';
 import Fade from '@material-ui/core/Fade';
-import { JobTypesSelect, IndustriesSelect } from '../items/company/Select.js'
+import { JobsSelect, IndustriesSelect } from '../items/company/Select.js'
 import { FilteringSlider } from '../items/company/Slider.js'
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +24,16 @@ const useStyles = makeStyles(theme => ({
 
 export const calculatePie = props => {
   const state = props.company
-  const totalState = state.working_hours + state.consume_day_off + state.satisfaction + state.motivation + state.transparency + state.respectable + state.growable + state.mentorship + state.compliance + state.fairness
+  const totalState = state.working_hours
+    + state.consume_day_off
+    + state.satisfaction
+    + state.motivation
+    + state.transparency
+    + state.respectable
+    + state.growable
+    + state.mentorship
+    + state.compliance
+    + state.fairness
   const pie = 100 - totalState
   return pie
 }
@@ -32,7 +41,9 @@ export const calculatePie = props => {
 export const CompanyView = props => {
   const classes = useStyles()
   const validation = company => {
-    return calculatePie(props) !== 0 || company.job_types.length < 3 || company.industries.length < 3
+    return calculatePie(props) !== 0
+      || company.jobs.length < 3
+      || company.industries.length < 3
   }
   return (
     <Container className={classes.container}>
@@ -58,13 +69,13 @@ export const CompanyView = props => {
       <FilteringSlider {...props} type="compliance"/>
       <FilteringSlider {...props} type="fairness"/>
       <Divider/>
-      <JobTypesSelect {...props} className='mt-4'/>
+      <JobsSelect {...props} className='mt-4'/>
       <IndustriesSelect {...props} className='mt-4'/>
       <div className='mt-4'>
-        <Button onClick={()=>props.stepBackward()} className='mr-4'>
+        <Button onClick={()=>props.jobDispatch.stepBackward()} className='mr-4'>
           戻る
         </Button>
-        <Button variant="contained" color="primary" disabled={false} onClick={()=>props.stepForward() && props.companyDispatch.postData(props)}>
+        <Button variant="contained" color="primary" disabled={validation(props.company)} onClick={()=>props.jobDispatch.stepForward() && props.companyDispatch.postData(props)}>
           結果を見る
         </Button>
       </div>

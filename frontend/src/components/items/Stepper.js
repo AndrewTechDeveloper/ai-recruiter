@@ -1,20 +1,11 @@
 import React from 'react';
-import { makeStyles  } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { Card, CardBody, CardGroup, Col, Container, Form, InputGroup, Row } from 'reactstrap'
 import { ApplicantView } from '../views/Applicant.js'
 import { CompanyView } from '../views/Company.js'
 import { ResultView } from '../views/Result.js'
 import { OpenWorksView } from '../views/OpenWorks.js'
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    marginTop: '8px',
-    marginBottom: '8px'
-  },
-}))
 
 const getSteps = () => {
   return ['ユーザー情報の入力', '会社フィルタリング', '結果', '企業情報を見る'];
@@ -22,7 +13,6 @@ const getSteps = () => {
 
 export const FormStepper = props => {
   const steps = getSteps();
-  const classes = useStyles()
   return (
     <div>
       <Stepper activeStep={props.job.active_step} alternativeLabel className='pr-0 pl-0'>

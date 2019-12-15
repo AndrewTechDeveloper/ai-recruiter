@@ -3,10 +3,7 @@ import { makeStyles  } from '@material-ui/core/styles';
 import { Container } from 'reactstrap'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import { JobCard } from '../items/result/Card.js'
-import { JobsList } from '../items/result/List.js'
-import { SkeletonCard } from '../items/result/Card.js'
+import { OpenWorksCard } from '../items/result/Card.js'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,16 +23,10 @@ export const OpenWorksView = props => {
       <Typography variant="subtitle1" className="text-center mb-4" gutterBottom>
         OpenWorksの企業情報ページに飛びます
       </Typography>
-      {props.company.isLoading &&
-        <SkeletonCard/>
-      }
-      <JobCard {...props}/>
+      <OpenWorksCard {...props}/>
       <div>
-        <Button onClick={()=>props.stepBackward()}>
-          戻る
-        </Button>
-        <Button variant="contained" color="primary" disabled={false} onClick={()=>props.stepForward()}>
-          結果を見る
+        <Button onClick={()=>props.jobDispatch.stepReset()}>
+          条件を変えて試す
         </Button>
       </div>
     </Container>

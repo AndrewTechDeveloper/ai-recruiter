@@ -2,8 +2,8 @@ import axios from 'axios'
 import { api_url } from '../components/items/Url'
 // action type
 const LOADING = "LOADING"
-const CONNECTION_FAILURE = "CONNECTION_FAILURE"
-const JOB_TYPES = "JOB_TYPES"
+const TOAST = "TOAST"
+const JOBS = "JOBS"
 const INDUSTRIES = "INDUSTRIES"
 const WORKING_HOURS = "WORKING_HOURS"
 const CONSUME_DAY_OFF = "CONSUME_DAY_OFF"
@@ -15,12 +15,11 @@ const GROWABLE = "GROWABLE"
 const MENTORSHIP = "MENTORSHIP"
 const COMPLIANCE = "COMPLIANCE"
 const FAIRNESS = "FAIRNESS"
-const GET_JOBS_SUCCESS = "GET_JOBS_SUCCESS"
+const RESULTS = "RESULTS"
 
 const initialState = {
   isLoading: false,
   jobs: [],
-  job_types: [],
   industries: [],
   working_hours: 0,
   consume_day_off: 0,
@@ -31,17 +30,19 @@ const initialState = {
   growable: 0,
   mentorship: 0,
   compliance: 0,
-  fairness: 0
+  fairness: 0,
+  toast: '',
+  results: []
 }
 
 export default function reducer(state=initialState, action) {
   switch (action.type) {
-  case CONNECTION_FAILURE:
-    return Object.assign({}, state, { isLoading: false })
+  case TOAST:
+    return Object.assign({}, state, { toast: action.toast })
   case LOADING:
     return Object.assign({}, state, { isLoading: true })
-  case JOB_TYPES:
-    return Object.assign({}, state, { job_types: action.job_types })
+  case JOBS:
+    return Object.assign({}, state, { jobs: action.jobs })
   case INDUSTRIES:
     return Object.assign({}, state, { industries: action.industries })
   case WORKING_HOURS:
@@ -64,81 +65,81 @@ export default function reducer(state=initialState, action) {
     return Object.assign({}, state, { compliance: action.compliance })
   case FAIRNESS:
     return Object.assign({}, state, { fairness: action.fairness })
-  case GET_JOBS_SUCCESS:
-    return Object.assign({}, state, { isLoading: false, jobs: action.jobs })
+  case RESULTS:
+    return Object.assign({}, state, { results: action.results, isLoading: false })
   default:
     return state;
   }
 }
 
 // action-creator
-export const jobTypesStatus = e => {
+export const jobs = e => {
   return {
-    type: JOB_TYPES,
-    job_types: e.target.value
+    type: JOBS,
+    jobs: e.target.value
   }
 }
-export const industriesStatus = e => {
+export const industries = e => {
   return {
     type: INDUSTRIES,
     industries: e.target.value
   }
 }
-export const workingHoursStatus = val => {
+export const workingHours = val => {
   return {
     type: WORKING_HOURS,
     working_hours: val
   }
 }
-export const consumeDayOffStatus = val => {
+export const consumeDayOff = val => {
   return {
     type: CONSUME_DAY_OFF,
     consume_day_off: val
   }
 }
-export const satisfactionStatus = val => {
+export const satisfaction = val => {
   return {
     type: SATISFACTION,
     satisfaction: val
   }
 }
-export const motivationStatus = val => {
+export const motivation = val => {
   return {
     type: MOTIVATION,
     motivation: val
   }
 }
-export const transparencyStatus = val => {
+export const transparency = val => {
   return {
     type: TRANSPARENCY,
     transparency: val
   }
 }
-export const respectableStatus = val => {
+export const respectable = val => {
   return {
     type: RESPECTABLE,
     respectable: val
   }
 }
-export const growableStatus = val => {
+export const growable = val => {
   return {
     type: GROWABLE,
     growable: val
   }
 }
-export const mentorshipStatus = val => {
+export const mentorship = val => {
   return {
     type: MENTORSHIP,
     mentorship: val
   }
 }
-export const complianceStatus = val => {
+export const compliance = val => {
   return {
     type: COMPLIANCE,
     compliance: val
   }
 }
-export const fairnessStatus = val => {
+export const fairness = val => {
   return {
     type: FAIRNESS,
     fairness: val
@@ -149,23 +150,23 @@ const loading = () => {
     type: LOADING,
   }
 }
-const connectionFailure = () => {
+const toast = text => {
   return {
-    type: CONNECTION_FAILURE,
+    type: TOAST,
   }
 }
-const getJobsSuccess = data => {
+const results = data => {
   return {
-    type: GET_JOBS_SUCCESS,
-    jobs: data.jobs
+    type: RESULTS,
+    results: data.companies
   }
 }
 export const postData = props => {
   return (dispatch) => {
     dispatch(loading())
-    return axios.get(`${api_url}/jobs`, {
+    return axios.get(`${api_url}/companies`, {
       params: {
-        job_types: props.company.job_types,
+        jobs: props.company.jobs,
         industries: props.company.industries,
         working_hours: props.company.working_hours,
         consume_day_off: props.company.consume_day_off,
@@ -179,9 +180,9 @@ export const postData = props => {
         fairness: props.company.fairness
       }
     }).then(res => {
-      dispatch(getJobsSuccess(res.data))
+      dispatch(results(res.data))
     }).catch(err => {
-      dispatch(connectionFailure(err))
+      dispatch(toast(err))
     })
   }
 }

@@ -1,12 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
 import {
   WatchLater,
-  SentimentSatisfiedAlt,
   WorkOff,
   MonetizationOn,
   Group,
@@ -41,6 +38,8 @@ const icon = type => {
     return <Gavel />
   case "fairness":
     return <Assessment />
+  default:
+    return ''
   }
 }
 const title = type => {
@@ -65,30 +64,34 @@ const title = type => {
     return "法令遵守意識"
   case "fairness":
     return "人事の評価正当性"
+  default:
+    return ''
   }
 }
 const dispatch = (props, val) => {
   switch(props.type){
   case "working_hours":
-    return props.companyDispatch.workingHoursStatus(val)
+    return props.companyDispatch.workingHours(val)
   case "consume_day_off":
-    return props.companyDispatch.consumeDayOffStatus(val)
+    return props.companyDispatch.consumeDayOff(val)
   case "satisfaction":
-    return props.companyDispatch.satisfactionStatus(val)
+    return props.companyDispatch.satisfaction(val)
   case "motivation":
-    return props.companyDispatch.motivationStatus(val)
+    return props.companyDispatch.motivation(val)
   case "transparency":
-    return props.companyDispatch.transparencyStatus(val)
+    return props.companyDispatch.transparency(val)
   case "respectable":
-    return props.companyDispatch.respectableStatus(val)
+    return props.companyDispatch.respectable(val)
   case "growable":
-    return props.companyDispatch.growableStatus(val)
+    return props.companyDispatch.growable(val)
   case "mentorship":
-    return props.companyDispatch.mentorshipStatus(val)
+    return props.companyDispatch.mentorship(val)
   case "compliance":
-    return props.companyDispatch.complianceStatus(val)
+    return props.companyDispatch.compliance(val)
   case "fairness":
-    return props.companyDispatch.fairnessStatus(val)
+    return props.companyDispatch.fairness(val)
+  default:
+    return ''
   }
 }
 const value = props => {
@@ -113,6 +116,8 @@ const value = props => {
     return props.company.compliance
   case "fairness":
     return props.company.fairness
+  default:
+    return ''
   }
 }
 
@@ -132,7 +137,7 @@ export const FilteringSlider = props => {
             valueLabelDisplay="auto"
             value={value(props)}
             onChange={(e, val) => {
-              const increase = val -value(props)
+              const increase = val - value(props)
               if(calculatePie(props) - increase >= 0){
                 dispatch(props, val)
               }

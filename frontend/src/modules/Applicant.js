@@ -1,163 +1,81 @@
-import axios from 'axios'
-import { api_url } from '../components/items/Url'
-// action type
 const LOADING = "LOADING"
-const GET_COLLEGES_SUCCESS = "GET_COLLEGES_SUCCESS"
-const GET_FACULTIES_SUCCESS = "GET_FACULTIES_SUCCESS"
-const GET_OCCUPATIONS_SUCCESS = "GET_OCCUPATIONS_SUCCESS"
-const CONNECTION_FAILURE = "CONNECTION_FAILURE"
-const SCHOOL = "SCHOOL"
+const COLLEGE = "COLLEGE"
 const FACULTY = "FACULTY"
 const AGE = "AGE"
 const GENDER = "GENDER"
-const OCCUPATION = "OCCUPATION"
-const SKILL = "SKILL"
+const TOAST = "TOAST"
+const EX_INDUSTRIES = "EX_INDUSTRIES"
 const EX_JOBS = "EX_JOBS"
-const HOBBY = "HOBBY"
-const CARRER = "CAREER"
-const SOCIETY = "SOCIETY"
 
 const initialState = {
-  isLoading: false,
-  school: '',
+  college: '',
   faculty: '',
   age: null,
   gender: null,
-  skill: '',
-  ex_jobs: [],
-  hobby: '',
-  career: '',
-  society: '',
-  company: '',
   colleges: [],
   faculties: [],
-  occupations: [],
+  ex_jobs: [],
+  ex_industries: [],
+  toast: '',
+  isLoading: false,
 }
 
 export default function reducer(state=initialState, action) {
   switch (action.type) {
   case LOADING:
     return Object.assign({}, state, { loading: true })
-  case GET_COLLEGES_SUCCESS:
-    return Object.assign({}, state, { loading: false, colleges: action.colleges })
-  case GET_OCCUPATIONS_SUCCESS:
-    return Object.assign({}, state, { loading: false, occupations: action.occupations })
-  case GET_FACULTIES_SUCCESS:
-    return Object.assign({}, state, { loading: false, faculties: action.faculties })
-  case CONNECTION_FAILURE:
-    return Object.assign({}, state, { toast: 'connectionFailure' })
-  case SCHOOL:
-    return Object.assign({}, state, { school: action.school, faculty: '' })
+  case COLLEGE:
+    return Object.assign({}, state, { college: action.college })
   case FACULTY:
     return Object.assign({}, state, { faculty: action.faculty })
   case AGE:
     return Object.assign({}, state, { age: action.age })
   case GENDER:
     return Object.assign({}, state, { gender: action.gender })
+  case TOAST:
+    return Object.assign({}, state, { toast: action.toast })
   case EX_JOBS:
     return Object.assign({}, state, { ex_jobs: action.ex_jobs })
+  case EX_INDUSTRIES:
+    return Object.assign({}, state, { ex_industries: action.ex_industries })
   default:
     return state;
   }
 }
 
-const loading = () => {
+export const college = val => {
   return {
-    type: LOADING,
+    type: COLLEGE,
+    college: val
   }
 }
-const connectionFailure = () => {
-  return {
-    type: CONNECTION_FAILURE,
-  }
-}
-const getCollegesSuccess = data => {
-  return {
-    type: GET_COLLEGES_SUCCESS,
-    colleges: data.colleges,
-  }
-}
-const getFacultiesSuccess = data => {
-  return {
-    type: GET_FACULTIES_SUCCESS,
-    faculties: data.faculties,
-  }
-}
-const getOccupationsSuccess = data => {
-  return {
-    type: GET_OCCUPATIONS_SUCCESS,
-    occupations: data.occupations,
-  }
-}
-const schoolStatus = val => {
-  return {
-    type: SCHOOL,
-    school: val,
-  }
-}
-export const getFaculties = value => {
-  return (dispatch) => {
-    dispatch(loading())
-    return axios.get(`${api_url}/colleges`, {
-      params: {
-        name: value
-      }
-    }).then(res => {
-      dispatch(getFacultiesSuccess(res.data))
-    }).catch(err => {
-      dispatch(connectionFailure(err))
-    })
-  }
-}
-export const getColleges = () => {
-  return (dispatch) => {
-    dispatch(loading())
-    return axios.get(`${api_url}/colleges`, {
-    }).then(res => {
-      dispatch(getCollegesSuccess(res.data))
-    }).catch(err => {
-      dispatch(connectionFailure(err))
-    })
-  }
-}
-export const getOccupations = () => {
-  return (dispatch) => {
-    dispatch(loading())
-    return axios.get(`${api_url}/occupations`, {
-    }).then(res => {
-      dispatch(getOccupationsSuccess(res.data))
-    }).catch(err => {
-      dispatch(connectionFailure(err))
-    })
-  }
-}
-export const schoolChange = val => {
-  return (dispatch) => {
-    dispatch(getFaculties(val))
-    dispatch(schoolStatus(val))
-  }
-}
-export const facultyStatus = val => {
+export const faculty = val => {
   return {
     type: FACULTY,
     faculty: val
   }
 }
-export const ageStatus = e => {
+export const age = e => {
   return {
     type: AGE,
     age: e.target.value
   }
 }
-export const genderStatus = val => {
+export const gender = val => {
   return {
     type: GENDER,
     gender: val
   }
 }
-export const exJobsStatus = val => {
+export const exJobs = e => {
   return {
     type: EX_JOBS,
-    ex_jobs: val
+    ex_jobs: e.target.value
+  }
+}
+export const exIndustries = e => {
+  return {
+    type: EX_INDUSTRIES,
+    ex_industries: e.target.value
   }
 }

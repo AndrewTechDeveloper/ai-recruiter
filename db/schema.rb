@@ -10,12 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_051654) do
+ActiveRecord::Schema.define(version: 2019_12_13_143315) do
 
   create_table "applicant_companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "applicant_id", null: false
     t.integer "company_id", null: false
     t.integer "company_rank", null: false
+    t.integer "company_nums", null: false
+    t.integer "algorithm_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "applicant_ex_industries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "applicant_id", null: false
+    t.integer "industry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "applicant_ex_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "applicant_id", null: false
+    t.integer "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -35,23 +51,19 @@ ActiveRecord::Schema.define(version: 2019_12_11_051654) do
   end
 
   create_table "applicants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "age", default: 0, null: false
-    t.integer "job_id", default: 0, null: false
-    t.integer "school_id", default: 0, null: false
-    t.integer "gender", default: 0, null: false
-    t.integer "ex_jobs", default: 0, null: false
-    t.integer "job_types", default: 0, null: false
-    t.integer "industries", default: 0, null: false
-    t.integer "working_hours", default: 0, null: false
-    t.integer "consume_day_off", default: 0, null: false
-    t.integer "satisfaction", default: 0, null: false
-    t.integer "motivation", default: 0, null: false
-    t.integer "transparency", default: 0, null: false
-    t.integer "respectable", default: 0, null: false
-    t.integer "growable", default: 0, null: false
-    t.integer "mentorship", default: 0, null: false
-    t.integer "compliance", default: 0, null: false
-    t.integer "fairness", default: 0, null: false
+    t.integer "age", null: false
+    t.integer "college_id", null: false
+    t.integer "gender", null: false
+    t.integer "working_hours", null: false
+    t.integer "consume_day_off", null: false
+    t.integer "satisfaction", null: false
+    t.integer "motivation", null: false
+    t.integer "transparency", null: false
+    t.integer "respectable", null: false
+    t.integer "growable", null: false
+    t.integer "mentorship", null: false
+    t.integer "compliance", null: false
+    t.integer "fairness", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

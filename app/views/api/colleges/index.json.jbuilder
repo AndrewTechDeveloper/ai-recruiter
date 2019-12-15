@@ -1,6 +1,6 @@
 json.colleges do
-  json.array! @colleges, :name
+  json.array! @colleges, :id, :name
 end
 json.faculties do
-  json.array! @faculties, :faculty, :level
+  json.array! @faculties, :id, :faculty, :level
 end

@@ -3,16 +3,23 @@ import { api_url } from '../components/items/Url'
 
 const STEP_FORWARD = "STEP_FORWARD"
 const STEP_BACKWARD = "STEP_BACKWARD"
+const STEP_RESET = "STEP_RESET"
 const LOADING = "LOADING"
 const TOAST = "TOAST"
 const CHECKED_COMPANY = "CHECKED_COMPANY"
+const SET_INDUSTRIES = "SET_INDUSTRIES"
+const SET_JOBS = "SET_JOBS"
+const SET_COLLEGES = "SET_COLLEGES"
+const SET_FACULTIES = "SET_FACULTIES"
 
 const initialState = {
   active_step: 0,
   isLoading: false,
   toast: '',
   checked_companies: [],
-  companies_ranks: [],
+  company_ranks: [],
+  industries: [],
+  jobs: [],
 }
 
 export default function reducer(state=initialState, action) {
@@ -24,10 +31,10 @@ export default function reducer(state=initialState, action) {
     )
   }
   const companyRank = () => {
-    return state.companies_ranks.indexOf(action.company_rank) === -1 ? (
-      state.companies_ranks.concat(action.company_rank)
+    return state.company_ranks.indexOf(action.company_rank) === -1 ? (
+      state.company_ranks.concat(action.company_rank)
     ) : (
-      state.companies_ranks.filter(val => val !== action.company_rank)
+      state.company_ranks.filter(val => val !== action.company_rank)
     )
   }
   switch (action.type) {
@@ -35,12 +42,26 @@ export default function reducer(state=initialState, action) {
     return Object.assign({}, state, { active_step: state.active_step + 1 })
   case STEP_BACKWARD:
     return Object.assign({}, state, { active_step: state.active_step - 1 })
+  case STEP_RESET:
+    return Object.assign({}, state, {
+      active_step: 1,
+      checked_companies: [],
+      company_ranks: [],
+    })
   case LOADING:
     return Object.assign({}, state, { isLoading: action.isLoading })
   case TOAST:
     return Object.assign({}, state, { toast: action.toast })
   case CHECKED_COMPANY:
-    return Object.assign({}, state, { checked_companies: checkCompany(), companies_ranks: companyRank() })
+    return Object.assign({}, state, { checked_companies: checkCompany(), company_ranks: companyRank() })
+  case SET_INDUSTRIES:
+    return Object.assign({}, state, { industries: action.industries })
+  case SET_JOBS:
+    return Object.assign({}, state, { jobs: action.jobs })
+  case SET_COLLEGES:
+    return Object.assign({}, state, { colleges: action.colleges })
+  case SET_FACULTIES:
+    return Object.assign({}, state, { faculties: action.faculties })
   default:
     return state;
   }
@@ -56,11 +77,40 @@ export const stepForward = e => {
     type: STEP_FORWARD,
   }
 }
+export const stepReset = () => {
+  return {
+    type: STEP_RESET,
+  }
+}
 export const checkCompany = (e, idx) => {
   return {
     type: CHECKED_COMPANY,
     checked_company: Number(e.target.value),
     company_rank: idx
+  }
+}
+const setIndustries = data => {
+  return {
+    type: SET_INDUSTRIES,
+    industries: data,
+  }
+}
+const setJobs = data => {
+  return {
+    type: SET_JOBS,
+    jobs: data,
+  }
+}
+const setColleges = data => {
+  return {
+    type: SET_COLLEGES,
+    colleges: data.colleges,
+  }
+}
+const setFaculties = data => {
+  return {
+    type: SET_FACULTIES,
+    faculties: data.faculties,
   }
 }
 const loading = boolean => {
@@ -75,51 +125,83 @@ const toast = text => {
   }
 }
 export const submitData = props => {
+  const gender = props.applicant.gender === "男性" ? 1 : 2
   return (dispatch) => {
     dispatch(loading(true))
     return axios.post(`${api_url}/applicants`, {
-      jobs: props.job.checked_companies,
-      job_ranks: props.job.company_ranks,
-      school: "早稲田大",
-      faculty: "国際教養",
-      age: 22,
-      gender: 1,
-      ex_jobs: [22, 33],
-      job_types: [1,3,5],
-      industries: [2,3,1,5],
-      working_hours: 10,
-      consume_day_off: 20,
-      satisfaction: 30,
-      motivation: 10,
-      transparency: 20,
-      respectable: 10,
-      growable: 10,
-      mentorship: 12,
-      compliance: 3,
-      fairness: 7
-      // jobs: props.job.checked_companies,
-      // job_ranks: props.job.company_ranks,
-      // school: props.applicant.school,
-      // faculty: props.applicant.faculty,
-      // age: props.applicant.age,
-      // gender: props.applicant.gender,
-      // ex_jobs: props.applicant.ex_jobs,
-      // job_types: props.company.job_types,
-      // industries: props.company.industries,
-      // working_hours: props.company.working_hours,
-      // consume_day_off: props.company.consume_day_off,
-      // satisfaction: props.company.satisfaction,
-      // motivation: props.company.motivation,
-      // transparency: props.company.transparency,
-      // respectable: props.company.respectable,
-      // growable: props.company.growable,
-      // mentorship: props.company.mentorship,
-      // compliance: props.company.compliance,
-      // fairness: props.company.fairness
+      college: props.applicant.college,
+      faculty: props.applicant.faculty,
+      age: props.applicant.age,
+      gender: gender,
+      ex_jobs: props.applicant.ex_jobs,
+      ex_industries: props.applicant.ex_industries,
+      jobs: props.company.jobs,
+      industries: props.company.industries,
+      working_hours: props.company.working_hours,
+      consume_day_off: props.company.consume_day_off,
+      satisfaction: props.company.satisfaction,
+      motivation: props.company.motivation,
+      transparency: props.company.transparency,
+      respectable: props.company.respectable,
+      growable: props.company.growable,
+      mentorship: props.company.mentorship,
+      compliance: props.company.compliance,
+      fairness: props.company.fairness,
+      companies: props.job.checked_companies,
+      company_ranks: props.job.company_ranks,
+      company_nums: props.company.results.length,
+      algorithm_type: 1,
     }).then(res => {
       dispatch(toast("dataSubmitted"))
     }).catch(err => {
       dispatch(toast("error"))
+    })
+  }
+}
+export const getIndustries = () => {
+  return (dispatch) => {
+    dispatch(loading())
+    return axios.get(`${api_url}/industries`, {
+    }).then(res => {
+      dispatch(setIndustries(res.data))
+    }).catch(err => {
+      dispatch(toast(''))
+    })
+  }
+}
+export const getJobs = () => {
+  return (dispatch) => {
+    dispatch(loading())
+    return axios.get(`${api_url}/jobs`, {
+    }).then(res => {
+      dispatch(setJobs(res.data))
+    }).catch(err => {
+      dispatch(toast(''))
+    })
+  }
+}
+export const getColleges = () => {
+  return (dispatch) => {
+    dispatch(loading())
+    return axios.get(`${api_url}/colleges`, {
+    }).then(res => {
+      dispatch(setColleges(res.data))
+    }).catch(err => {
+      dispatch(toast(''))
+    })
+  }
+}
+export const getFaculties = college => {
+  return (dispatch) => {
+    dispatch(loading())
+    return axios.get(`${api_url}/colleges`, {
+      params: {
+        name: college && college.name
+      }
+    }).then(res => {
+      dispatch(setFaculties(res.data))
+    }).catch(err => {
+      dispatch(toast(""))
     })
   }
 }

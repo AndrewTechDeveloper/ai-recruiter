@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { Container } from 'reactstrap'
 import { AgeForm } from '../items/applicant/Form.js'
 import Fade from '@material-ui/core/Fade';
-import { GenderAutoSelect, SchoolAutoSelect, FacultyAutoSelect, ExJobsAutoSelect } from '../items/applicant/AutoSelect.js'
+import { GenderAutoSelect, CollegeAutoSelect, FacultyAutoSelect, ExIndustriesSelect, ExJobsSelect } from '../items/applicant/Select.js'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -16,20 +16,26 @@ const useStyles = makeStyles(theme => ({
 export const ApplicantView = props => {
   const classes = useStyles()
   const validation = applicant => {
-    return applicant.school === '' || applicant.faculty === '' || applicant.age === '' || applicant.gender === '' || applicant.ex_jobs.length === 0
+    return applicant.school === ''
+      || applicant.faculty === ''
+      || applicant.age === ''
+      || applicant.gender === ''
+      || applicant.ex_jobs.length === 0
+      || applicant.ex_industries.length === 0
   }
   return (
     <Container className={classes.container}>
-      <SchoolAutoSelect {...props} />
-      <Fade in={props.applicant.school !== '高卒' && props.applicant.school !== 'その他'}>
+      <CollegeAutoSelect {...props} />
+      <Fade in={props.applicant.college !== '高卒' || props.applicant.college !== 'その他'}>
         <div>
           <FacultyAutoSelect {...props} />
         </div>
       </Fade>
       <AgeForm {...props} />
       <GenderAutoSelect {...props} />
-      <ExJobsAutoSelect {...props} />
-      <Button variant="contained" className='mt-4' disabled={false} color="primary" onClick={()=>props.stepForward()}>
+      <ExJobsSelect {...props} />
+      <ExIndustriesSelect {...props} />
+      <Button variant="contained" className='mt-4' disabled={validation(props.applicant)} color="primary" onClick={()=>props.jobDispatch.stepForward()}>
         次へ
       </Button>
     </Container>
