@@ -82,7 +82,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "react-scripts build",
+    "build": "react-scripts build NODE_OPTIONS=--max_old_space_size=4096",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
