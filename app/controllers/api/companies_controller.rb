@@ -53,5 +53,9 @@ class Api::CompaniesController < ApplicationController
     hash_array.sort_by!{ |k| k[:evaluation] }.reverse!
     return hash_array.map{|v| v[:id]}
   end
+
+  def map()
+
+  end
 end
 
