@@ -22,6 +22,8 @@ export const AgeForm = props => {
       <Input
         id="school"
         type="number"
+        min={15}
+        max={80}
         onChange={props.applicantDispatch.age}
         value={props.applicant.age || ''}
       />

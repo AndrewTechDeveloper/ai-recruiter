@@ -16,6 +16,7 @@ const MENTORSHIP = "MENTORSHIP"
 const COMPLIANCE = "COMPLIANCE"
 const FAIRNESS = "FAIRNESS"
 const RESULTS = "RESULTS"
+const ALGORITHM_TYPE = "ALGORITHM_TYPE"
 
 const initialState = {
   isLoading: false,
@@ -32,7 +33,8 @@ const initialState = {
   compliance: 0,
   fairness: 0,
   toast: '',
-  results: []
+  results: [],
+  algorithm_type: null
 }
 
 export default function reducer(state=initialState, action) {
@@ -67,6 +69,8 @@ export default function reducer(state=initialState, action) {
     return Object.assign({}, state, { fairness: action.fairness })
   case RESULTS:
     return Object.assign({}, state, { results: action.results, isLoading: false })
+  case ALGORITHM_TYPE:
+    return Object.assign({}, state, { algorithm_type: action.algorithm_type })
   default:
     return state;
   }
@@ -161,7 +165,15 @@ const results = data => {
     results: data.companies
   }
 }
+const algorithm = rand => {
+  return {
+    type: ALGORITHM_TYPE,
+    algorithm_type: rand
+  }
+}
+
 export const postData = props => {
+  const rand = Math.floor(Math.random() * 3) + 1
   return (dispatch) => {
     dispatch(loading())
     return axios.get(`${api_url}/companies`, {
@@ -177,9 +189,11 @@ export const postData = props => {
         growable: props.company.growable,
         mentorship: props.company.mentorship,
         compliance: props.company.compliance,
-        fairness: props.company.fairness
+        fairness: props.company.fairness,
+        algorithm_type: rand
       }
     }).then(res => {
+      dispatch(algorithm(rand))
       dispatch(results(res.data))
     }).catch(err => {
       dispatch(toast(err))

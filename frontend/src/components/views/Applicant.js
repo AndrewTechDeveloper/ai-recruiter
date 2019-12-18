@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
 export const ApplicantView = props => {
   const classes = useStyles()
   const validation = applicant => {
-    return applicant.school === ''
-      || applicant.faculty === ''
+    return (props.job.colleges && props.job.colleges.indexOf(applicant.college) === -1)
+      || (props.job.faculties && props.job.faculties.indexOf(applicant.faculty) === -1)
       || applicant.age === ''
       || applicant.gender === ''
       || applicant.ex_jobs.length === 0
@@ -26,7 +26,7 @@ export const ApplicantView = props => {
   return (
     <Container className={classes.container}>
       <CollegeAutoSelect {...props} />
-      <Fade in={props.applicant.college !== '高卒' || props.applicant.college !== 'その他'}>
+      <Fade in={props.applicant.college !== '高卒' && props.applicant.college !== 'その他'}>
         <div>
           <FacultyAutoSelect {...props} />
         </div>

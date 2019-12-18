@@ -18,6 +18,7 @@ export const GenderAutoSelect = props => {
       onChange={(e, val) => {
         props.applicantDispatch.gender(val)
       }}
+      error
       options={options}
       renderInput={params => (
         <TextField {...params} label="性別" margin="normal" fullWidth />
@@ -28,30 +29,38 @@ export const GenderAutoSelect = props => {
 
 export const CollegeAutoSelect = props => {
   return (
-    <Autocomplete
-      value={{ name: props.applicant.college }}
-      getOptionLabel={option => option.name}
-      options={props.job.colleges}
-      onChange={(e, val) => props.applicantDispatch.college(val ? val.name : '') & props.jobDispatch.getFaculties(val)}
-      renderInput={params => (
-        <TextField {...params} label="最終学歴(入力すると補完されます)" margin="normal" fullWidth />
-      )}
-    />
+    <FormControl className='my-2' error>
+      <Autocomplete
+        freeSolo
+        value={props.applicant.college}
+        options={props.job.colleges}
+        onChange={(e, val) => props.applicantDispatch.college(val) & props.jobDispatch.getFaculties(val)}
+        renderInput={params => (
+          <TextField {...params} label="最終学歴(入力すると補完されます)" margin="normal" fullWidth />
+        )}
+      />
+      {props.job.colleges && props.applicant.college !== '' && props.job.colleges.indexOf(props.applicant.college) === -1 &&
+        <FormHelperText>選択肢の中から選んでください</FormHelperText>
+      }
+    </FormControl>
   );
 }
 export const FacultyAutoSelect = props => {
   return (
-    <Autocomplete
-      value={{ faculty: props.applicant.faculty }}
-      getOptionLabel={option => option.faculty}
-      options={props.job.faculties}
-      onChange={(e, val) => {
-        props.applicantDispatch.faculty(val ? val.faculty : '')
-      }}
-      renderInput={params => (
-        <TextField {...params} label="学部" margin="normal" fullWidth />
-      )}
-    />
+    <FormControl className='my-2' error>
+      <Autocomplete
+        freeSolo
+        value={props.applicant.faculty}
+        options={props.job.faculties}
+        onChange={(e, val) => props.applicantDispatch.faculty(val)}
+        renderInput={params => (
+          <TextField {...params} label="学部" margin="normal" fullWidth />
+        )}
+      />
+      {props.job.faculties && props.applicant.faculty !== '' && props.job.faculties.indexOf(props.applicant.faculty) === -1 &&
+        <FormHelperText>選択肢の中から選んでください</FormHelperText>
+      }
+    </FormControl>
   );
 }
 export const ExJobsSelect = props => {
@@ -80,7 +89,6 @@ export const ExJobsSelect = props => {
           )
         })}
       </Select>
-      <FormHelperText>過去に経験したことのある職種を選んでください(複数回答可)</FormHelperText>
       <FormHelperText>*該当する職種がない、経歴がない場合はその他を選択してください</FormHelperText>
     </FormControl>
   )
@@ -111,7 +119,6 @@ export const ExIndustriesSelect = props => {
           )
         })}
       </Select>
-      <FormHelperText>過去に経験したことのある業界を選んでください(複数選択可)</FormHelperText>
       <FormHelperText>*該当する職種がない、経歴がない場合はその他を選択してください</FormHelperText>
     </FormControl>
   )

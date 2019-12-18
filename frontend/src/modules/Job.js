@@ -104,13 +104,13 @@ const setJobs = data => {
 const setColleges = data => {
   return {
     type: SET_COLLEGES,
-    colleges: data.colleges,
+    colleges: data.colleges.map(val => val.name),
   }
 }
 const setFaculties = data => {
   return {
     type: SET_FACULTIES,
-    faculties: data.faculties,
+    faculties: data.faculties.map(val => val.faculty)
   }
 }
 const loading = boolean => {
@@ -150,7 +150,7 @@ export const submitData = props => {
       companies: props.job.checked_companies,
       company_ranks: props.job.company_ranks,
       company_nums: props.company.results.length,
-      algorithm_type: 1,
+      algorithm_type: props.company.algorithm_type,
     }).then(res => {
       dispatch(toast("dataSubmitted"))
     }).catch(err => {
@@ -196,7 +196,7 @@ export const getFaculties = college => {
     dispatch(loading())
     return axios.get(`${api_url}/colleges`, {
       params: {
-        name: college && college.name
+        name: college
       }
     }).then(res => {
       dispatch(setFaculties(res.data))

@@ -1,25 +1,27 @@
 class Api::CompaniesController < ApplicationController
   def index
-    p rand = rand(1..3)
-    if rand == 1
+    algorithm = params[:algorithm_type].to_i
+    if algorithm == 1
+      p "rand"
       @companies = Company
         .joins(:company_jobs)
         .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
         .includes(:company_jobs)
         .distinct
         .order('RAND()')
-    elsif rand == 2
+    elsif algorithm == 2
+      p "AHP"
       companies = Company
         .joins(:company_jobs)
         .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
         .includes(:company_jobs)
         .distinct
-      ids = algorithm(companies)
+      ids = ahp(companies)
       @companies = Company
         .find(ids)
         .index_by(&:id)
         .values_at(*ids)
-    elsif rand == 3
+    elsif algorithm == 3
       p "machine"
       @companies = Company
         .joins(:company_jobs)
@@ -31,7 +33,7 @@ class Api::CompaniesController < ApplicationController
   end
 
   private
-  def algorithm(jobs)
+  def ahp(jobs)
     hash_array = []
     jobs.each do |job|
       wor = job.working_hours * params[:working_hours].to_f
