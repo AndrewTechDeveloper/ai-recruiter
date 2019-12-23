@@ -1,6 +1,7 @@
 class Api::CompaniesController < ApplicationController
   def index
     algorithm = params[:algorithm_type].to_i
+    algorithm = 3
     if algorithm == 1
       p "rand"
       @companies = Company
@@ -23,6 +24,7 @@ class Api::CompaniesController < ApplicationController
         .values_at(*ids)
     elsif algorithm == 3
       p "machine"
+      map(params)
       @companies = Company
         .joins(:company_jobs)
         .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
@@ -54,8 +56,9 @@ class Api::CompaniesController < ApplicationController
     return hash_array.map{|v| v[:id]}
   end
 
-  def map()
-
+  def map(params)
+    applicant = JSON.parse(params[:applicant])
+    p college = College.find_by(name: applicant["college"], faculty: applicant["faculty"])
+    p applicant_companies = ApplicantCompany.joins(:applicant).where(applicants: {age: 22}).distinct
   end
 end
-

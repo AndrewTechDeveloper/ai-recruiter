@@ -178,6 +178,7 @@ export const postData = props => {
     dispatch(loading())
     return axios.get(`${api_url}/companies`, {
       params: {
+        applicant: props.applicant,
         jobs: props.company.jobs,
         industries: props.company.industries,
         working_hours: props.company.working_hours,
