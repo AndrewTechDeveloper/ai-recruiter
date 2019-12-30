@@ -19,21 +19,9 @@ export const ResultView = props => {
   const validation = job => {
     return job.checked_companies.length === 0
   }
-  const algorithm = () => {
-    switch(props.company.algorithm_type) {
-    case 1:
-      return "inherit"
-    case 2:
-      return "primary"
-    case 3:
-      return "secondary"
-    default:
-      return "inherit"
-    }
-  }
   return (
     <Container className={classes.container}>
-      <Typography variant="h6" className="text-center" gutterBottom color={algorithm()}>
+      <Typography variant="h6" className="text-center" gutterBottom color='primary'>
         {props.company.results.length === 0 && !props.company.isLoading ? (
           "条件に合う会社が見つかりませんでした"
         ) : (

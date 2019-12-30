@@ -31,8 +31,7 @@ class Api::ApplicantsController < ApplicationController
         applicant_id: applicant.id,
         company_id: company,
         company_rank: params[:company_ranks][idx] + 1,
-        company_nums: params[:company_nums],
-        algorithm_type: params[:algorithm_type]
+        company_nums: params[:company_nums]
       })
     end
   end

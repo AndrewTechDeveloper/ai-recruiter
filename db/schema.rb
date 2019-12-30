@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 2019_12_13_143315) do
     t.integer "company_id", null: false
     t.integer "company_rank", null: false
     t.integer "company_nums", null: false
-    t.integer "algorithm_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

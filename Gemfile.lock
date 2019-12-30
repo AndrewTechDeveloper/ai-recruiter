@@ -101,14 +101,9 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
-    numpy (0.2.0)
-      pycall (>= 1.2.0.beta1)
-    pandas (0.3.1)
-      pycall (>= 1.0.0)
     public_suffix (4.0.1)
     puma (4.3.0)
       nio4r (~> 2.0)
-    pycall (1.2.1)
     rack (2.0.7)
     rack-cors (1.0.3)
     rack-test (1.1.0)
@@ -178,10 +173,7 @@ DEPENDENCIES
   letter_opener
   listen (>= 3.0.5, < 3.2)
   mysql2
-  numpy (~> 0.2.0)
-  pandas
   puma
-  pycall
   rack-cors
   rails
   seed-fu

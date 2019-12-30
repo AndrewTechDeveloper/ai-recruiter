@@ -149,8 +149,7 @@ export const submitData = props => {
       fairness: props.company.fairness,
       companies: props.job.checked_companies,
       company_ranks: props.job.company_ranks,
-      company_nums: props.company.results.length,
-      algorithm_type: props.company.algorithm_type,
+      company_nums: props.company.results.length
     }).then(res => {
       dispatch(toast("dataSubmitted"))
     }).catch(err => {

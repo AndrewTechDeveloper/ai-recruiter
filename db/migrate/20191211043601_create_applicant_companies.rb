@@ -5,7 +5,6 @@ class CreateApplicantCompanies < ActiveRecord::Migration[6.0]
       t.integer :company_id, null: false
       t.integer :company_rank, null: false
       t.integer :company_nums, null: false
-      t.integer :algorithm_type, null: false
 
       t.timestamps
     end

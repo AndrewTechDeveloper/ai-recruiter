@@ -11,9 +11,6 @@ gem 'rack-cors'
 gem 'jbuilder'
 gem 'dotenv-rails'
 gem 'seed-fu'
-gem 'pycall'
-gem 'numpy', '~> 0.2.0'
-gem 'pandas'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

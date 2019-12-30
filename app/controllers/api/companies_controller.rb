@@ -1,41 +1,17 @@
 class Api::CompaniesController < ApplicationController
+
   def index
-    algorithm = params[:algorithm_type].to_i
-    algorithm = 3
-    if algorithm == 1
-      p "rand"
-      @companies = Company
-        .joins(:company_jobs)
-        .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
-        .includes(:company_jobs)
-        .distinct
-        .order('RAND()')
-    elsif algorithm == 2
-      p "AHP"
-      companies = Company
-        .joins(:company_jobs)
-        .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
-        .includes(:company_jobs)
-        .distinct
-      ids = ahp(companies)
-      @companies = Company
-        .find(ids)
-        .index_by(&:id)
-        .values_at(*ids)
-    elsif algorithm == 3
-      p "machine"
-      map(params)
-      @companies = Company
-        .joins(:company_jobs)
-        .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
-        .includes(:company_jobs)
-        .distinct
-    end
+    @companies = Company
+      .joins(:company_jobs)
+      .where(industry_id: params[:industries], company_jobs: {job_id: params[:jobs]})
+      .includes(:company_jobs)
+      .distinct
+      .order('RAND()')
     render 'index', formats: :json, handlers: 'jbuilder'
   end
 
   private
-  def ahp(jobs)
+  def AHP(jobs)
     hash_array = []
     jobs.each do |job|
       wor = job.working_hours * params[:working_hours].to_f
@@ -56,9 +32,4 @@ class Api::CompaniesController < ApplicationController
     return hash_array.map{|v| v[:id]}
   end
 
-  def map(params)
-    applicant = JSON.parse(params[:applicant])
-    p college = College.find_by(name: applicant["college"], faculty: applicant["faculty"])
-    p applicant_companies = ApplicantCompany.joins(:applicant).where(applicants: {age: 22}).distinct
-  end
 end
