@@ -21,18 +21,18 @@ export const ResultView = props => {
   }
   return (
     <Container className={classes.container}>
-      <Typography variant="h6" className="text-center" gutterBottom color='primary'>
+      <Typography variant="h6" className="text-center" gutterBottom>
         {props.company.results.length === 0 && !props.company.isLoading ? (
           "条件に合う会社が見つかりませんでした"
         ) : (
           "あなたにおすすめの会社はこちらです！"
         )}
       </Typography>
-      <Typography variant="subtitle1" className="text-muted text-center mb-4" gutterBottom>
+      <Typography variant="subtitle1" className="text-center mb-4" color='secondary' gutterBottom>
         {props.company.results.length === 0 && !props.company.isLoading ? (
           "条件を変えて再度お試しください"
         ) : (
-          "気になる会社にチェックしてください(複数選択可)"
+          "気になる会社を選択して選択完了ボタンを押してください(複数選択可)"
         )}
       </Typography>
       {props.company.isLoading &&
