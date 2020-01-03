@@ -61,4 +61,52 @@ namespace :evaluate_accuracy do
     end
     pp mean_average_precision = accuracy.sum / accuracy.size.to_f
   end
+
+  desc "evaluate svm"
+  task :svm => :environment do
+    require 'pycall/import'
+    include PyCall::Import
+    pyimport 'keras'
+    pyfrom 'keras.datasets', import: 'mnist'
+    pyfrom 'keras.models', import: 'Sequential'
+    pyfrom 'keras.layers', import: ['Dense', 'Dropout', 'Flatten']
+    pyfrom 'keras.layers', import: ['Conv2D', 'MaxPooling2D']
+
+
+  end
+  desc "evaluate mnist"
+  task :mnist => :environment do
+    require 'pycall/import'
+    include PyCall::Import
+    pyimport 'keras'
+    pyfrom 'keras.datasets', import: 'mnist'
+    pyfrom 'keras.models', import: 'Sequential'
+    pyfrom 'keras.layers', import: ['Dense', 'Dropout', 'Flatten']
+
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+    x_train_reshape = x_train.reshape(60000, 784)
+    x_test_reshape = x_test.reshape(10000, 784)
+    x_train_reshape_std = x_train_reshape.astype('float32') / 255
+    x_test_reshape_std = x_test_reshape.astype('float32') / 255
+
+    y_train = keras.utils.to_categorical(y_train, 10)
+    y_test = keras.utils.to_categorical(y_test, 10)
+
+    model = Sequential.()
+    model.add(Dense.(512, activation: 'relu'))
+    model.add(Dense.(10, activation: 'softmax'))
+    model.compile('rmsprop', 'categorical_crossentropy', metrics=['accuracy'])
+    model.fit(x_train_reshape_std ,y_train ,epochs=2)
+
+    score = model.evaluate(x_test_reshape_std, y_test)
+    print(sprintf("Test loss: %.6f\n", score[0]))
+    print(sprintf("Test accuracy: %.6f\n", score[1]))
+    print(model.summary)
+
+    ### save weights
+    pp model
+    File.open('mnist_mlp_model.json', 'w'){|file| file.write(model)}
+    model.save_weights('mnist_mlp_weights.h5')
+  end
 end
