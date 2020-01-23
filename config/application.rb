@@ -24,6 +24,7 @@ module AiRecruiter
     config.middleware.use ActionDispatch::Flash
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+    config.autoloader = :classic
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
